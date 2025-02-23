@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <div class="content">
-      <AppInfo />
+      <AppInfo :AllMovies="movies.length" :FavoratieMovies="movies.filter(sevimli =>sevimli.favorite ===true ).length"/>
       <SearchPanel />
       <MovieList :movies="movies" @delete-movie="deleteMovie"/>
-      <MovieAddForm />
+      <MovieAddForm @new-movie="addNewMovie"/>
     </div>
   </div>
 </template>
@@ -48,6 +48,9 @@ export default {
   methods:{
     deleteMovie(kino){
       this.movies = this.movies.filter(film => film !==  kino)
+    },
+    addNewMovie(newMovie){
+      this.movies.push(newMovie)
     }
   }
 
