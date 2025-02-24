@@ -7,9 +7,14 @@
 </template>
 <script>
 export default {
-    
+    data() {
+        return {
+            filterMovie: ""
+        }
+    },
+    methods:{
+        
+    }
 }
 </script>
-<style>
-    
-</style>
+<style></style>

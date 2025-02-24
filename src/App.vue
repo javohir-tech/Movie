@@ -1,10 +1,11 @@
 <template>
   <div class="container">
     <div class="content">
-      <AppInfo :AllMovies="movies.length" :FavoratieMovies="movies.filter(sevimli =>sevimli.favorite ===true ).length"/>
-      <SearchPanel />
-      <MovieList :movies="movies" @delete-movie="deleteMovie"/>
-      <MovieAddForm @new-movie="addNewMovie"/>
+      <AppInfo :AllMovies="movies.length"
+        :FavoratieMovies="movies.filter(sevimli => sevimli.favorite === true).length" />
+      <SearchPanel @search-query="updateSearchQuary" />
+      <MovieList :movies="filteredMovies" @delete-movie="deleteMovie" />
+      <MovieAddForm @new-movie="addNewMovie" />
     </div>
   </div>
 </template>
@@ -42,15 +43,24 @@ export default {
           like: true,
           favorite: false
         },
-      ]
+      ],
+      searchQuery: ""
     }
   },
-  methods:{
-    deleteMovie(kino){
-      this.movies = this.movies.filter(film => film !==  kino)
+  computed: {
+    filteredMovies() {
+      return this.movies.filter(movie => movie.name.toLocaleLowerCase().includes(this.searchQuery.toLocaleLowerCase()))
+    }
+  },
+  methods: {
+    deleteMovie(kino) {
+      this.movies = this.movies.filter(film => film !== kino)
     },
-    addNewMovie(newMovie){
+    addNewMovie(newMovie) {
       this.movies.push(newMovie)
+    },
+    updateSearchQuary(query) {
+      this.searchQuery = query
     }
   }
 
